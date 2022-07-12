@@ -1,6 +1,6 @@
 const express = require('express');
-const {taskRouter} = require("./routes");
-const bodyParser = require("body-parser");
+const {taskRouter} = require('./routes/taskRoute');
+const bodyParser = require('body-parser');
 const app = express();
 
 app.use(express.static('public'));

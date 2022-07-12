@@ -1,7 +1,7 @@
 const form = document.querySelector('#taskform');
 const result = document.querySelector('#taskslist');
 
-async function handleSubmit(event) {
+const handleSubmit = async (event) => {
 
     event.preventDefault();
 
@@ -16,10 +16,10 @@ async function handleSubmit(event) {
             'Content-Type': 'application/json'
         }
     });
-    result.innerHTML = await response.text();
+    result.innerText = await response.text();
 
-    console.log(value)
+    console.log(value);
     // console.log(response)
 
-}
+};
 form.addEventListener('submit', handleSubmit);
