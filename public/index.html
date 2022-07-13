@@ -13,21 +13,24 @@
         <label>
             <input type="text" name="name" size="50" placeholder="Add name..." required>
         </label>
-        <button type="submit" >Save</button>
+        <button type="submit">Save</button>
     </form>
     <br>
     <label>
         <textarea rows="4" cols="50" name="description" form="taskform" required></textarea>
     </label>
-</section>
-<section class="list-tasks">
-    <h1>Tasks List</h1>
-    <ul class="todo-list" id="taskslist">
-        <li>
+    <p class="todo-list" id="result"></p>
+    <hr>
 
-        </li>
-    </ul>
 </section>
+
+
+<section class="list">
+    <h1>Tasks List</h1>
+    <button class="btn-list" >Show tasks</button>
+    <ul class="tasks-list"></ul>
+</section>
+
 <script src="js/index.js"></script>
 
 </body>

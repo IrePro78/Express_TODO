@@ -1,41 +1,51 @@
-const {readFile, appendFile,writeFile, writeFileSync} = require('fs');
+const {readFile, writeFile} = require('fs').promises;
 
 
 const FILE_NAME = './data/tasks.json';
-let obj = {
-    tasks: []
+
+const saveToFile = async (db) => {
+    return await writeFile(FILE_NAME, JSON.stringify(db,null, 4), 'utf-8');
 };
 
 
-const saveToFile = async (task) => {
-    await writeFile(FILE_NAME, task, 'utf-8', ()=>{});
+const readFromFile = async () => {
+    const data = await readFile(FILE_NAME, 'utf-8');
+    return data ? JSON.parse(data) : [];
 };
 
-
+//Add task to list
 const addTask = async (req, res) => {
-    res.send(req.body);
-    obj.tasks.push(req.body);
+    const db = await readFromFile();
 
-    const task = JSON.stringify(obj);
-
-    console.log(task);
-    // const strings = arrTasks.map((i) => JSON.parse(i));
-    // res.json(arrTasks);
-    // console.log(strings)
-    // await writeFile(FILE_NAME, task, 'utf-8');
-    return saveToFile(task);
-};
-
-const editTask = (req, res) => {
-    res.json(req.body);
-};
-
-const delTask = () => {
+    db.push(req.body);
+    res.send(`Added task:\nName: ${req.body.name}\nDescription: ${req.body.description}`);
+    await saveToFile(db);
 
 };
+
+//Edit task
+const editTask = async (req, res) => {
+    const data = JSON.parse(await readFromFile());
+    console.log(data);
+
+    res.send(data);
+};
+
+const delTask = () => {};
+
+
+//Get list taks
+const listTasks = async (req, res) => {
+    const db = await readFromFile();
+    console.log(db);
+    res.send(db);
+};
+
 
 module.exports = {
     addTask,
     editTask,
-    delTask
+    delTask,
+    listTasks
 };
+

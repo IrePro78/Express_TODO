@@ -8,9 +8,9 @@ router
 
     .post('/edit', taskController.editTask)
 
-    .post('/delete', taskController.delTask);
+    .post('/delete', taskController.delTask)
 
-
+    .get('/list', taskController.listTasks);
 
 module.exports = {
     taskRouter: router
