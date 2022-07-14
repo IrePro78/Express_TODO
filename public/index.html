@@ -11,7 +11,9 @@
     <h1>Add task</h1>
     <form id="taskform" action="">
         <label>
-            <input type="text" name="name" size="50" placeholder="Add name..." required>
+            <input type="hidden" name="task_id" value=0>
+            <input type="hidden" name="status" value="0">
+            <input type="text" name="title" size="50" placeholder="Add name..." required>
         </label>
         <button type="submit">Save</button>
     </form>
@@ -28,7 +30,9 @@
 <section class="list">
     <h1>Tasks List</h1>
     <button class="btn-list" >Show tasks</button>
+    <div id="task-container">
     <ul class="tasks-list"></ul>
+    </div>
 </section>
 
 <script src="js/index.js"></script>

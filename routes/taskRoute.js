@@ -6,9 +6,9 @@ const router = express.Router();
 router
     .post('/add', taskController.addTask)
 
-    .post('/edit', taskController.editTask)
+    .post('/delete/:taskId', taskController.removeTask)
 
-    .post('/delete', taskController.delTask)
+    .patch('/confirm/:taskId', taskController.confirmTask)
 
     .get('/list', taskController.listTasks);
 

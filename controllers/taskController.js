@@ -17,35 +17,47 @@ const readFromFile = async () => {
 const addTask = async (req, res) => {
     const db = await readFromFile();
 
+    req.body['task_id'] = db.length+1;
+
     db.push(req.body);
-    res.send(`Added task:\nName: ${req.body.name}\nDescription: ${req.body.description}`);
+    const {task_id, title, description, status} = req.body;
+    res.send(`Added task:\nID: ${task_id}\nTitle: ${title}\nDescription: ${description}\nStatus: ${status}`);
+
     await saveToFile(db);
 
 };
 
-//Edit task
-const editTask = async (req, res) => {
-    const data = JSON.parse(await readFromFile());
-    console.log(data);
+//Remove task
+const removeTask = async (req, res) => {
+    const db = await readFromFile();
+    const {taskId} = req.params;
+    // const task_id = db.find(i => i.task_id === task_Id - 1);
+    // delete db[taskId];
+    db.splice(taskId, 1);
 
-    res.send(data);
+
+
+    console.log(db);
+    console.log(taskId);
+
+    await saveToFile(db);
+    res.send(`Deleting task: ${taskId}`);
 };
 
-const delTask = () => {};
+//Confirm task
+const confirmTask = () => {};
 
 
 //Get list taks
 const listTasks = async (req, res) => {
     const db = await readFromFile();
-    console.log(db);
     res.send(db);
 };
 
 
 module.exports = {
     addTask,
-    editTask,
-    delTask,
+    removeTask,
+    confirmTask,
     listTasks
 };
-
