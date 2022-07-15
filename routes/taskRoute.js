@@ -6,7 +6,7 @@ const router = express.Router();
 router
     .post('/add', taskController.addTask)
 
-    .post('/delete/:taskId', taskController.removeTask)
+    .delete('/delete/:taskId', taskController.removeTask)
 
     .patch('/confirm/:taskId', taskController.confirmTask)
 

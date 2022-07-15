@@ -10,25 +10,32 @@ const addTask = async (event) => {
     const data = new FormData(event.target);
     const value = Object.fromEntries(data.entries());
 
-    const response = await fetch('tasks/add', {
+    const res = await fetch('tasks/add', {
         method: 'POST',
         body: JSON.stringify(value),
         headers: {
             'Content-Type': 'application/json'
         }
     });
-    result.innerText = await response.text();
+    if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    result.innerText = await res.text();
+    console.log(res);
     form.reset();
+    await getTasks(event);
+
 };
 
 const getTasks = async (event) => {
     list.innerText = '';
     event.preventDefault();
+
     const res = await fetch('tasks/list');
+    if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+    }
     const json = await res.json();
-
-    console.log(res);
-
 
     json.forEach(({task_id, title, description, status}, i) => {
         const div = document.createElement('div');
@@ -49,27 +56,35 @@ const getTasks = async (event) => {
         div.appendChild(btnConfirm);
         list.appendChild(div);
 
-
     });
-    return json;
+
 };
-const removeTask = async event => {
+const removeTask = async (event) => {
     const id = Number(event.target.dataset.id);
     console.log(id);
     const res = await fetch(`tasks/delete/${id}`, {
-        method: 'POST',
+        method: 'DELETE',
     });
+    if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+    }
     console.log(res);
+    await getTasks(event);
 
 
 };
 
 const confirmTask = async event => {
     const id = Number(event.target.dataset.id);
-    const tasks = await getTasks(event);
-    const task = tasks.find(i => i.task_id === id + 1);
-    console.log(task);
     console.log(id);
+    const res = await fetch(`tasks/confirm/${id}`, {
+        method: 'PATCH',
+    });
+    if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    console.log(res);
+
 };
 
 

@@ -16,12 +16,16 @@ const readFromFile = async () => {
 //Add task to list
 const addTask = async (req, res) => {
     const db = await readFromFile();
+    const task_id = db.length ? db.at(-1).task_id : 0;
 
-    req.body['task_id'] = db.length+1;
+    req.body['task_id'] = task_id+1;
 
     db.push(req.body);
-    const {task_id, title, description, status} = req.body;
-    res.send(`Added task:\nID: ${task_id}\nTitle: ${title}\nDescription: ${description}\nStatus: ${status}`);
+    const {title, description, status} = req.body;
+    res.status(201);
+    res.send(`Added task:\nID: ${task_id+1}\nTitle: ${title}\nDescription: ${description}\nStatus: ${status}`);
+
+
 
     await saveToFile(db);
 
@@ -31,21 +35,27 @@ const addTask = async (req, res) => {
 const removeTask = async (req, res) => {
     const db = await readFromFile();
     const {taskId} = req.params;
-    // const task_id = db.find(i => i.task_id === task_Id - 1);
-    // delete db[taskId];
     db.splice(taskId, 1);
 
-
-
-    console.log(db);
-    console.log(taskId);
-
     await saveToFile(db);
+    res.status(204);
     res.send(`Deleting task: ${taskId}`);
 };
 
 //Confirm task
-const confirmTask = () => {};
+const confirmTask = async (req,res) => {
+    const db = await readFromFile();
+    const {taskId} = req.params;
+    const task = db.find(i => i.task_id === Number(taskId)+1);
+    console.log(task);
+    task['status'] = 'DONE';
+    db.push(req.body);
+    await saveToFile(db);
+    res.status(200);
+    res.send(`Confirmed task Id: ${taskId}`);
+
+};
+
 
 
 //Get list taks
