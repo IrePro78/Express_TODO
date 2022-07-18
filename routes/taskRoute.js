@@ -8,7 +8,7 @@ router
 
     .delete('/delete/:taskId', taskController.removeTask)
 
-    .patch('/confirm/:taskId', taskController.confirmTask)
+    .put('/confirm/:taskId', taskController.confirmTask)
 
     .get('/list', taskController.getListTasks);
 

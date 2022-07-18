@@ -74,7 +74,7 @@ const removeTask = async (event) => {
 const confirmTask = async event => {
     const id = Number(event.target.dataset.id);
     const res = await fetch(`tasks/confirm/${id}`, {
-        method: 'PATCH',
+        method: 'PUT',
     });
     if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
