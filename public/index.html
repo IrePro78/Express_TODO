@@ -9,17 +9,17 @@
 <body>
 <section class="add-task">
     <h1>Add task</h1>
-    <form id="taskform" action="">
+    <form id="task-form" action="">
         <label>
             <input type="hidden" name="task_id" value=0>
             <input type="hidden" name="status" value="">
-            <input type="text" name="title" size="50" placeholder="Add name..." required>
+            <input type="text" name="title" size="50" placeholder="Add title..." required>
         </label>
         <button type="submit">Save</button>
     </form>
     <br>
     <label>
-        <textarea rows="4" cols="50" name="description" form="taskform" required></textarea>
+        <textarea rows="4" cols="50" name="description" form="task-form" placeholder="Add text..." required></textarea>
     </label>
     <p class="todo-list" id="result"></p>
     <hr>
@@ -36,6 +36,5 @@
 </section>
 
 <script src="js/index.js"></script>
-
 </body>
 </html>

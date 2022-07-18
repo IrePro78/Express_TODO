@@ -10,7 +10,7 @@ router
 
     .patch('/confirm/:taskId', taskController.confirmTask)
 
-    .get('/list', taskController.listTasks);
+    .get('/list', taskController.getListTasks);
 
 module.exports = {
     taskRouter: router
